@@ -1,0 +1,33 @@
+.container {
+  width: 25%;
+  height: 25%;
+  background-color: #000;
+  position: absolute;
+  font-size: 80px;
+  cursor: pointer;
+  color: #fff;
+  border: 1px solid #e5d6f6;
+  transition: transform 0.4s;
+}
+.innerSpan {
+  width: 84%;
+  height: 84%;
+  margin: 8%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #922ec5;
+  font-family: sans-serif;
+}
+.container-enter {
+  opacity: 0;
+}
+
+.container-enter-active {
+  transition: opacity 750ms ease-out;
+  opacity: 1;
+}
+.container-exit-enter {
+  transition: opacity 750ms ease-out;
+  opacity: 0;
+}
