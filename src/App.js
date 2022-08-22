@@ -1,20 +1,18 @@
 import { useState } from 'react'
 import FieldComponent from './components/FieldComponent/FieldComponent'
 import styles from './App.module.css'
-import { matrix as initionalMatrix } from './Constants'
+import {
+  matrix as initialMatrix,
+  shuffleMatrix,
+  setInitialMatrix
+} from './Constants'
 
 function App() {
-  const [matrix, setMatrix] = useState(initionalMatrix)
+  const [matrix, setMatrix] = useState(initialMatrix)
   const buttonHandler = () => {
-    setMatrix(() => {
-      const matrix = [
-        [15, 2, 3, 4],
-        [5, 6, 7, 8],
-        [9, 10, 11, 12],
-        [1, 13, 14, 16]
-      ]
-      return matrix
-    })
+    const newMatrix = shuffleMatrix()
+    setMatrix(newMatrix)
+    setInitialMatrix(newMatrix)
   }
   return (
     <div className={styles.container}>

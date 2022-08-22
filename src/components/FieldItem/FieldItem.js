@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { isValidSwap } from '../../Constants'
+import { isValidSwap, matrix } from '../../Constants'
 
 import styles from './style.module.css'
 
@@ -31,7 +31,13 @@ const FieldItem = ({ number, translate, setBlankElement, blankElement }) => {
       blankElement.setAttribute('x', clickCoords.y)
       clickElement.setAttribute('y', blankCoords.x)
       clickElement.setAttribute('x', blankCoords.y)
+
+      const temp = matrix[clickCoords.x][clickCoords.y]
+      matrix[clickCoords.x][clickCoords.y] =
+        matrix[blankCoords.x][blankCoords.y]
+      matrix[blankCoords.x][blankCoords.y] = temp
     }
+    console.log(matrix)
   }
 
   return (
