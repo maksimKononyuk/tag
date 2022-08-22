@@ -10,7 +10,7 @@ const getMatrix = (arr) => {
       y++
       x = 0
     }
-    matrix[x][y] = arr[i]
+    matrix[y][x] = arr[i]
     x++
   }
   return matrix
