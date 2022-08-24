@@ -3,7 +3,6 @@
   height: 25%;
   background-color: #000;
   position: absolute;
-  font-size: 80px;
   cursor: pointer;
   color: #fff;
   border: 1px solid #e5d6f6;
@@ -18,16 +17,17 @@
   justify-content: center;
   border: 2px solid #922ec5;
   font-family: sans-serif;
-}
-.container-enter {
-  opacity: 0;
+  font-size: 80px;
 }
 
-.container-enter-active {
-  transition: opacity 750ms ease-out;
-  opacity: 1;
+@media (max-width: 540px) {
+  .innerSpan {
+    font-size: 50px;
+  }
 }
-.container-exit-enter {
-  transition: opacity 750ms ease-out;
-  opacity: 0;
+
+@media (max-width: 360px) {
+  .innerSpan {
+    font-size: 40px;
+  }
 }

@@ -1,14 +1,27 @@
 import { useEffect, useRef } from 'react'
-import { isValidSwap, matrix } from '../../Constants'
 
 import styles from './style.module.css'
 
-const FieldItem = ({ number, translate, setBlankElement, blankElement }) => {
+const FieldItem = ({
+  number,
+  translate,
+  setBlankElement,
+  blankElement,
+  initialMatrix,
+  setIsWon,
+  setSteps,
+  setRightString
+}) => {
   const elem = useRef()
 
   useEffect(() => {
+    elem.current.style.transform = `translate(${translate.y * 100}%, ${
+      translate.x * 100
+    }%)`
+    elem.current.setAttribute('x', translate.y)
+    elem.current.setAttribute('y', translate.x)
     if (number === 16) setBlankElement(elem.current)
-  }, [number])
+  })
 
   const buttonHandler = (e) => {
     const clickElement = e.target.closest('div')
@@ -20,7 +33,8 @@ const FieldItem = ({ number, translate, setBlankElement, blankElement }) => {
       x: +blankElement.getAttribute('y'),
       y: +blankElement.getAttribute('x')
     }
-    if (isValidSwap(clickCoords, blankCoords)) {
+    if (initialMatrix.isValidSwap(clickCoords, blankCoords)) {
+      initialMatrix.playSound('click')
       clickElement.style.transform = `translate(${blankCoords.y * 100}%, ${
         blankCoords.x * 100
       }%)`
@@ -32,12 +46,19 @@ const FieldItem = ({ number, translate, setBlankElement, blankElement }) => {
       clickElement.setAttribute('y', blankCoords.x)
       clickElement.setAttribute('x', blankCoords.y)
 
-      const temp = matrix[clickCoords.x][clickCoords.y]
-      matrix[clickCoords.x][clickCoords.y] =
-        matrix[blankCoords.x][blankCoords.y]
-      matrix[blankCoords.x][blankCoords.y] = temp
-    }
-    console.log(matrix)
+      const temp = initialMatrix.matrix[clickCoords.x][clickCoords.y]
+      initialMatrix.matrix[clickCoords.x][clickCoords.y] =
+        initialMatrix.matrix[blankCoords.x][blankCoords.y]
+      initialMatrix.matrix[blankCoords.x][blankCoords.y] = temp
+
+      initialMatrix.stepIncrement()
+
+      if (initialMatrix.isWonMatrix()) {
+        setIsWon(true)
+        setSteps(initialMatrix.steps)
+        setRightString(initialMatrix.getRightString())
+      }
+    } else initialMatrix.playSound('errorClick')
   }
 
   return (
@@ -45,10 +66,7 @@ const FieldItem = ({ number, translate, setBlankElement, blankElement }) => {
       ref={elem}
       className={styles.container}
       value={number}
-      x={translate.y}
-      y={translate.x}
       style={{
-        transform: `translate(${translate.y * 100}%, ${translate.x * 100}%)`,
         display: number === 16 ? 'none' : 'block'
       }}
       onClick={buttonHandler}

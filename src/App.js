@@ -1,27 +1,35 @@
 import { useState } from 'react'
 import FieldComponent from './components/FieldComponent/FieldComponent'
 import styles from './App.module.css'
-import {
-  matrix as initialMatrix,
-  shuffleMatrix,
-  setInitialMatrix
-} from './Constants'
+import { Matrix } from './Constants'
+
+const initialMatrix = new Matrix()
+window.matrix = initialMatrix
 
 function App() {
-  const [matrix, setMatrix] = useState(initialMatrix)
+  const [matrix, setMatrix] = useState(initialMatrix.matrix)
+  const [isWon, setIsWon] = useState(false)
   const buttonHandler = () => {
-    const newMatrix = shuffleMatrix()
-    setMatrix(newMatrix)
-    setInitialMatrix(newMatrix)
+    initialMatrix.playSound('shuffleClick')
+    const newMatrix = initialMatrix.shuffleMatrix()
+    setMatrix(() => {
+      initialMatrix.setInitialMatrix(newMatrix)
+      return newMatrix
+    })
+    setIsWon(false)
   }
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Игра в Пятнашки</h1>
-      <FieldComponent matrix={matrix} />
+      <h1 className={styles.title}>Игра «Пятнашки»</h1>
+      <FieldComponent
+        matrix={matrix}
+        initialMatrix={initialMatrix}
+        isWon={isWon}
+        setIsWon={setIsWon}
+      />
       <button className={styles.button} onClick={buttonHandler}>
         Перемешать
       </button>
-      <h1>{matrix.toString()}</h1>
     </div>
   )
 }
