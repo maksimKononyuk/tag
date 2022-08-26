@@ -22,6 +22,10 @@ export class Matrix {
     this.shuffleSoundClick.volume = 0.4
   }
 
+  getSteps() {
+    return this.steps
+  }
+
   getMatrix(arr) {
     const matrix = [[], [], [], []]
     let x = 0
@@ -37,12 +41,12 @@ export class Matrix {
     return matrix
   }
 
-  isValidSwap(coords, coordsBlank) {
-    const diffX = Math.abs(coords.x - coordsBlank.x)
-    const diffY = Math.abs(coords.y - coordsBlank.y)
+  isValidSwap(elemCoords, blankCoords) {
+    const diffX = Math.abs(elemCoords.x - blankCoords.x)
+    const diffY = Math.abs(elemCoords.y - blankCoords.y)
     return (
       (diffX === 1 || diffY === 1) &&
-      (coords.x === coordsBlank.x || coords.y === coordsBlank.y)
+      (elemCoords.x === blankCoords.x || elemCoords.y === blankCoords.y)
     )
   }
 
@@ -64,10 +68,6 @@ export class Matrix {
 
   setInitialMatrix(newMatrix) {
     this.matrix = newMatrix
-  }
-
-  stepIncrement() {
-    this.steps++
   }
 
   isValidArray(position) {
@@ -134,5 +134,13 @@ export class Matrix {
     audio.pause()
     audio.currentTime = 0
     audio.play()
+  }
+
+  changeMatrixElements(coordsElem1, coordsElem2) {
+    const temp = this.matrix[coordsElem1.x][coordsElem1.y]
+    this.matrix[coordsElem1.x][coordsElem1.y] =
+      this.matrix[coordsElem2.x][coordsElem2.y]
+    this.matrix[coordsElem2.x][coordsElem2.y] = temp
+    this.steps++
   }
 }

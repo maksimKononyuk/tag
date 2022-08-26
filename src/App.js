@@ -12,10 +12,8 @@ function App() {
   const buttonHandler = () => {
     initialMatrix.playSound('shuffleClick')
     const newMatrix = initialMatrix.shuffleMatrix()
-    setMatrix(() => {
-      initialMatrix.setInitialMatrix(newMatrix)
-      return newMatrix
-    })
+    initialMatrix.setInitialMatrix(newMatrix)
+    setMatrix(newMatrix)
     setIsWon(false)
   }
   return (
@@ -27,7 +25,11 @@ function App() {
         isWon={isWon}
         setIsWon={setIsWon}
       />
-      <button className={styles.button} onClick={buttonHandler}>
+      <button
+        className={styles.button}
+        style={{ backgroundColor: isWon ? 'green' : '#000' }}
+        onClick={buttonHandler}
+      >
         Перемешать
       </button>
     </div>

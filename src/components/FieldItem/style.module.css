@@ -1,11 +1,12 @@
 .container {
   width: 25%;
   height: 25%;
-  background-color: #000;
+  background-color: #0d0702;
   position: absolute;
   cursor: pointer;
   color: #fff;
   border: 1px solid #e5d6f6;
+  border-radius: 10px;
   transition: transform 0.4s;
 }
 .innerSpan {
@@ -15,9 +16,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid #922ec5;
+  border: 3px solid #922ec5;
   font-family: sans-serif;
   font-size: 80px;
+  border-radius: 10px;
 }
 
 @media (max-width: 540px) {
